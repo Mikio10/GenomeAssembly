@@ -7,7 +7,7 @@ cd $CURRENT
 #software update
 brew upgrade fastp
 brew upgrade spades
-brew upgrade quast
+$brew upgrade quast
 
 #count the number of fastq-files
 read_num=`find *fastq* | wc -l`
@@ -22,8 +22,7 @@ if [[ read_num -eq 1 ]]; then
     spades.py --careful --cov-cutoff auto -s fastp_out.fastq.gz -o spades_assembled
     echo "===== SPAdes done! ====="
 
-    quastpy_path=`which quast.py`
-    python $quastpy_path -o quast_output spades_assembled/contigs.fasta
+    quast -o quast_output spades_assembled/contigs.fasta
     echo "===== QUAST done! ====="
 
 #pair-end
@@ -37,8 +36,7 @@ elif [[ read_num -eq 2 ]]; then
     spades.py --careful --cov-cutoff auto -1 fastp_out_left.fastq.gz -2 fastp_out_right.fastq.gz -o spades_assembled
     echo "===== SPAdes done! ====="
 
-    quastpy=`which quast.py`
-    python $quastpy -o quast_output spades_assembled/contigs.fasta
+    quast -o quast_output spades_assembled/contigs.fasta
     echo "===== QUAST done! ====="
 
 #no files
